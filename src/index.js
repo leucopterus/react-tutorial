@@ -228,11 +228,104 @@ function ClockApp() {
 
 // ========================================
 
+class Toggle extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {isToggleOn: true};
+
+    // this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick = () => {
+    this.setState(state => ({
+      isToggleOn: !state.isToggleOn
+    }));
+  }
+
+  render() {
+    return (
+      <button onClick={this.handleClick}>
+        {this.state.isToggleOn ? 'Turned On' : 'Turned Off'}
+      </button>
+      /*
+<button onClick={(e) => this.deleteRow(id, e)}>Удалить строку</button>
+<button onClick={this.deleteRow.bind(this, id)}>Удалить строку</button>
+      */
+    )
+  }
+}
+
+// ========================================
+
+function UserGreeting(props) {
+  return <h1>Welcome back!</h1>;
+}
+
+function GuestGreeting(props) {
+  return <h1>Log in, please.</h1>
+}
+
+function ChooseGreeting(props) {
+  const isLoggedIn = props.isLoggedIn;
+  return isLoggedIn ? <UserGreeting /> : <GuestGreeting />
+}
+
+function LoginButton(props) {
+  return (
+    <button onClick={props.onClick}>
+      Log In
+    </button>
+  );
+}
+
+function LogoutButton(props) {
+  return (
+    <button onClick={props.onClick}>
+      Log Out
+    </button>
+  );
+}
+
+class LoginControl extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleLoginClick = this.handleLoginClick.bind(this);
+    this.handleLogoutClick = this.handleLogoutClick.bind(this);
+    this.state = {isLoggedIn: false};
+  }
+
+  handleLoginClick() {
+    this.setState({isLoggedIn: true});
+  }
+
+  handleLogoutClick() {
+    this.setState({isLoggedIn: false});
+  }
+
+  render() {
+    const isLoggedIn = this.state.isLoggedIn;
+    let button;
+    button = (isLoggedIn) 
+      ? <LogoutButton onClick={this.handleLogoutClick} />
+      : <LoginButton onClick={this.handleLoginClick} />;
+    return (
+      <div>
+        <ChooseGreeting isLoggedIn={isLoggedIn} />
+        {button}
+      </div>
+    );
+  }
+}
+
+// ========================================
+
 ReactDOM.render(
   <div>
+    <Toggle />
     <ClockApp />
     <App />
     <Game />
+    <LoginControl />
   </div>,
   document.getElementById('root')
 );
