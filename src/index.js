@@ -142,7 +142,7 @@ function Info(props) {
   return (
     <div>
       <Avatar user={props.info} />
-      <div class='userInfo-name'>{props.info.name}</div>
+      <div className='userInfo-name'>{props.info.name}</div>
     </div>
   );
 }
@@ -150,12 +150,12 @@ function Info(props) {
 
 function Comment(props) {
   return (
-    <div class="container">
+    <div className="container">
       <Greeding name={props.userComment.info.name} />
-      <div class="userinfo">
+      <div className="userinfo">
         <Info info={props.userComment.info} />
       </div>
-      <div class="comment">{props.userComment.text}</div> 
+      <div className="comment">{props.userComment.text}</div> 
     </div>
   );
 }
@@ -318,6 +318,27 @@ class LoginControl extends React.Component {
 }
 
 // ========================================
+// 8
+
+function ListItems(props) {
+  // Правильно! Не нужно определять здесь ключ:
+  return <li>{props.value}</li>
+}
+
+function NumberList(props) {
+  const numbers = props.numbers;
+  const listItems = numbers.map((number) => 
+  // Правильно! Ключ нужно определять внутри массива:
+    <ListItems key={number.toString()} value={number} />
+  );
+  return (
+    <ul>{listItems}</ul>
+  );
+}
+
+const numbers = [1, 2, 3, 4, 5];
+
+// ========================================
 
 ReactDOM.render(
   <div>
@@ -326,6 +347,7 @@ ReactDOM.render(
     <App />
     <Game />
     <LoginControl />
+    <NumberList numbers={numbers} />
   </div>,
   document.getElementById('root')
 );
